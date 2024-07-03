@@ -9,17 +9,13 @@ use Illuminate\View\View;
 
 class PrintersModelsController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $models = PrintersModels::where("Aktywne", "=", true)->orderBy("IDdrukarki","asc")->paginate(1000);
-        return view('PrintersModels.index', ["models" => $models]);
-    }
-
-    public function filter(Request $request)
-    {
+        
         $keyword = $request->input('search');
 
         // Wykonaj zapytanie z filtrowaniem używając Eloquent
-        $models = PrinterModels::where("Aktywne", "=", true)
+        $models = PrintersModels::where("Aktywne", "=", true)
         ->Where('Producent', 'like', "%$keyword%")
         ->orWhere('Model', 'like', "%$keyword%")
         ->orderBy('IDdrukarki', 'asc')

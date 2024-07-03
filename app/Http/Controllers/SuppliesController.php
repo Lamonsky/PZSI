@@ -11,13 +11,8 @@ use App\Models\Shops;
 
 class SuppliesController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $models = Supplies::where("Aktywne", "=", true)->orderBy("IDToneru","asc")->paginate(1000);
-        return view('Supplies.index', ["models" => $models]);
-    }
-
-    public function filter(Request $request)
-    {
         $keyword = $request->input('search');
 
         // Wykonaj zapytanie z filtrowaniem używając Eloquent
@@ -36,11 +31,7 @@ class SuppliesController extends Controller
         
         ->orderBy('IDToneru', 'asc')
         ->paginate(10);
-
-
-        return view('Renting.index', [
-            "models" => $models,
-        ]);
+        return view('Supplies.index', ["models" => $models]);
     }
 
     public function create() : View

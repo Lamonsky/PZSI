@@ -11,7 +11,7 @@
                 <a class="btn btn-primary" href="/supplies">Wszystkie</a>
             </div>
             <div class="ms-auto">
-                <form action="{{ route('supplies.filter') }}" method="GET" class="d-flex">
+                <form action="{{ route('supplies.index') }}" method="GET" class="d-flex">
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Wyszukaj..." class="form-control me-2">
                     <button type="submit" class="btn btn-primary">Szukaj</button>
                 </form>

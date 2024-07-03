@@ -12,13 +12,8 @@ use App\Models\Shops;
 
 class RepairsController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $models = Repairs::where("Aktywne", "=", true)->orderBy("IDNaprawy","asc")->paginate(1000);
-        return view('Repairs.index', ["models" => $models]);
-    }
-
-    public function filter(Request $request)
-    {
         $keyword = $request->input('search');
 
         // Wykonaj zapytanie z filtrowaniem używając Eloquent
@@ -43,6 +38,7 @@ class RepairsController extends Controller
         return view('Repairs.index', [
             "models" => $models,
         ]);
+        return view('Repairs.index', ["models" => $models]);
     }
 
     public function create() : View

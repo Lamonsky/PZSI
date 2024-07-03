@@ -12,13 +12,8 @@ use App\Models\Contractors;
 
 class PrintersInventoryController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $models = PrintersInventory::where("Aktywne", "=", true)->orderBy("IDLokalizacji","asc")->paginate(1000);
-        return view('PrintersInventory.index', ["models" => $models]);
-    }
-
-    public function filter(Request $request)
-    {
         $keyword = $request->input('search');
 
         // Wykonaj zapytanie z filtrowaniem używając Eloquent
@@ -41,11 +36,7 @@ class PrintersInventoryController extends Controller
         
         ->orderBy('IDdrukarki', 'asc')
         ->paginate(10);
-
-
-        return view('PrintersInventory.index', [
-            "models" => $models,
-        ]);
+        return view('PrintersInventory.index', ["models" => $models]);
     }
 
     public function create() : View

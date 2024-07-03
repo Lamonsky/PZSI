@@ -9,13 +9,8 @@ use Illuminate\View\View;
 
 class ContractorsController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $models = Contractors::where("Aktywne", "=", true)->orderBy("IDDostawcy","asc")->paginate(1000);
-        return view('Contractors.index', ["models" => $models]);
-    }
-
-    public function filter(Request $request)
-    {
         $keyword = $request->input('search');
 
         // Wykonaj zapytanie z filtrowaniem używając Eloquent
@@ -24,10 +19,7 @@ class ContractorsController extends Controller
         ->orWhere('Mail', 'like', "%$keyword%")
         ->orderBy('IDDostawcy', 'asc')
         ->paginate(10);
-
-        return view('Contractors.index', [
-            "models" => $models,
-        ]);
+        return view('Contractors.index', ["models" => $models]);
     }
 
     public function create() : View

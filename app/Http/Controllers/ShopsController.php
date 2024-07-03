@@ -9,13 +9,8 @@ use Illuminate\View\View;
 
 class ShopsController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $models = Shops::where("Aktywne", "=", true)->orderBy("IDLokalizacji","asc")->paginate(1000);
-        return view('shops.index', ["models" => $models]);
-    }
-
-    public function filter(Request $request)
-    {
         $keyword = $request->input('search');
 
         // Wykonaj zapytanie z filtrowaniem używając Eloquent
@@ -25,10 +20,7 @@ class ShopsController extends Controller
         ->orWhere('IleDrukarek', 'like', "%$keyword%")
         ->orderBy('IDLokalizacji', 'asc')
         ->paginate(10);
-
-        return view('Shops.index', [
-            "models" => $models,
-        ]);
+        return view('shops.index', ["models" => $models]);
     }
 
     public function create() : View

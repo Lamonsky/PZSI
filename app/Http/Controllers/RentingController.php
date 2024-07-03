@@ -12,15 +12,8 @@ use App\Models\PrintersInventory;
 
 class RentingController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $models = Renting::where("Aktywne", "=", true)->orderBy("IDDzierzawy","asc")->paginate(1000);
-        return view('Renting.index', [
-            "models" => $models,
-        ]);
-    }
-
-    public function filter(Request $request)
-    {
         $keyword = $request->input('search');
 
         // Wykonaj zapytanie z filtrowaniem używając Eloquent
@@ -52,12 +45,8 @@ class RentingController extends Controller
         })
         ->orderBy('IDDzierzawy', 'asc')
         ->paginate(10);
-
-        $contractors = Contractors::all();
-
         return view('Renting.index', [
             "models" => $models,
-            "contractors" => $contractors,
         ]);
     }
 

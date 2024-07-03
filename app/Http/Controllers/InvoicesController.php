@@ -9,13 +9,8 @@ use Illuminate\View\View;
 
 class InvoicesController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $models = Invoices::where("Aktywne", "=", true)->orderBy("id","asc")->paginate(1000);
-        return view('Invoices.index', ["models" => $models]);
-    }
-
-    public function filter(Request $request)
-    {
         $keyword = $request->input('search');
 
         // Wykonaj zapytanie z filtrowaniem używając Eloquent
@@ -23,10 +18,7 @@ class InvoicesController extends Controller
         ->Where('numer_faktury', 'like', "%$keyword%")
         ->orderBy('id', 'asc')
         ->paginate(10);
-
-        return view('Invoices.index', [
-            "models" => $models,
-        ]);
+        return view('Invoices.index', ["models" => $models]);
     }
 
     public function create() : View
