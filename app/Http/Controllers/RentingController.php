@@ -12,43 +12,49 @@ use App\Models\PrintersInventory;
 
 class RentingController extends Controller
 {
-    public function index(Request $request){
-        $models = Renting::where("Aktywne", "=", true)->orderBy("IDDzierzawy","asc")->paginate(1000);
+    public function index(Request $request)
+    {
         $keyword = $request->input('search');
 
-        // Wykonaj zapytanie z filtrowaniem używając Eloquent
-        $models = Renting::where("Aktywne", "=", true)
-        ->whereHas('PrintersInventoryFK', function ($query) use ($keyword) {
-            $query->where('NumerSeryjny', 'like', "%$keyword%")
-                ->orWhere('AdresIP', 'like', "%$keyword%")
-                ->orWhere('Lokalizacja', 'like', "%$keyword%");
-        })
-        ->orWhereHas('ContractorsFK', function ($query) use ($keyword) {
-            $query->where('Nazwa', 'like', "%$keyword%")
-                ->orWhere('Mail', 'like', "%$keyword%");
-        })
-        ->orWhereHas('PrintersInventoryFK.LocationsFK', function ($query) use ($keyword) {
-            $query->where('Kod', 'like', "%$keyword%")
-                ->orWhere('Nazwa_Lokalizacji', 'like', "%$keyword%");
-        })
-        ->orWhereHas('PrintersInventoryFK.PrintersModelsFK', function ($query) use ($keyword) {
-            $query->where('Producent', 'like', "%$keyword%")
-                ->orWhere('Model', 'like', "%$keyword%");
-        })
-        ->orWhere('KwotaJedNetto', 'like', "%$keyword%")
-        ->orWhere('Ilosc', 'like', "%$keyword%")
-        ->orWhere('KwotaDzierzawy', 'like', "%$keyword%")
-        ->orWhere('Suma', 'like', "%$keyword%")
-        ->orWhere('Data', 'like', "%$keyword%")
-        ->orWhereHas('InvoicesFK', function ($query) use ($keyword) {
-            $query->where('numer_faktury', 'like', "%$keyword%");
-        })
-        ->orderBy('IDDzierzawy', 'asc')
-        ->paginate(10);
+        $query = Renting::where("Aktywne", "=", true);
+
+        if ($keyword != "") {
+            $query->where(function ($query) use ($keyword) {
+                $query->whereHas('PrintersInventoryFK', function ($query) use ($keyword) {
+                        $query->where('NumerSeryjny', 'like', "%$keyword%")
+                            ->orWhere('AdresIP', 'like', "%$keyword%")
+                            ->orWhere('Lokalizacja', 'like', "%$keyword%");
+                    })
+                    ->orWhereHas('ContractorsFK', function ($query) use ($keyword) {
+                        $query->where('Nazwa', 'like', "%$keyword%")
+                            ->orWhere('Mail', 'like', "%$keyword%");
+                    })
+                    ->orWhereHas('PrintersInventoryFK.LocationsFK', function ($query) use ($keyword) {
+                        $query->where('Kod', 'like', "%$keyword%")
+                            ->orWhere('Nazwa_Lokalizacji', 'like', "%$keyword%");
+                    })
+                    ->orWhereHas('PrintersInventoryFK.PrintersModelsFK', function ($query) use ($keyword) {
+                        $query->where('Producent', 'like', "%$keyword%")
+                            ->orWhere('Model', 'like', "%$keyword%");
+                    })
+                    ->orWhere('KwotaJedNetto', 'like', "%$keyword%")
+                    ->orWhere('Ilosc', 'like', "%$keyword%")
+                    ->orWhere('KwotaDzierzawy', 'like', "%$keyword%")
+                    ->orWhere('Suma', 'like', "%$keyword%")
+                    ->orWhere('Data', 'like', "%$keyword%")
+                    ->orWhereHas('InvoicesFK', function ($query) use ($keyword) {
+                        $query->where('numer_faktury', 'like', "%$keyword%");
+                    });
+            });
+        }
+
+        $models = $query->orderBy('IDDzierzawy', 'asc')->paginate(10);
+
         return view('Renting.index', [
             "models" => $models,
         ]);
     }
+
 
     public function create() : View
     {

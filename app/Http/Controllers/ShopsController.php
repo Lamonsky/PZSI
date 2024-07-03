@@ -9,19 +9,27 @@ use Illuminate\View\View;
 
 class ShopsController extends Controller
 {
-    public function index(Request $request){
-        $models = Shops::where("Aktywne", "=", true)->orderBy("IDLokalizacji","asc")->paginate(1000);
+    public function index(Request $request)
+    {
         $keyword = $request->input('search');
 
-        // Wykonaj zapytanie z filtrowaniem używając Eloquent
-        $models = Shops::where("Aktywne", "=", true)
-        ->Where('Kod', 'like', "%$keyword%")
-        ->orWhere('Nazwa_Lokalizacji', 'like', "%$keyword%")
-        ->orWhere('IleDrukarek', 'like', "%$keyword%")
-        ->orderBy('IDLokalizacji', 'asc')
-        ->paginate(10);
-        return view('shops.index', ["models" => $models]);
+        $query = Shops::where("Aktywne", "=", true);
+
+        if ($keyword != "") {
+            $query->where(function ($query) use ($keyword) {
+                $query->where('Kod', 'like', "%$keyword%")
+                    ->orWhere('Nazwa_Lokalizacji', 'like', "%$keyword%")
+                    ->orWhere('IleDrukarek', 'like', "%$keyword%");
+            });
+        }
+
+        $models = $query->orderBy('IDLokalizacji', 'asc')->paginate(10);
+
+        return view('shops.index', [
+            "models" => $models,
+        ]);
     }
+
 
     public function create() : View
     {

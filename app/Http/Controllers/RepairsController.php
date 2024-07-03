@@ -12,34 +12,37 @@ use App\Models\Shops;
 
 class RepairsController extends Controller
 {
-    public function index(Request $request){
-        $models = Repairs::where("Aktywne", "=", true)->orderBy("IDNaprawy","asc")->paginate(1000);
+    public function index(Request $request)
+    {
         $keyword = $request->input('search');
 
-        // Wykonaj zapytanie z filtrowaniem używając Eloquent
-        $models = Repairs::where("Aktywne", "=", true)
-        ->whereHas('ContractorsFK', function ($query) use ($keyword) {
-            $query->where('Nazwa', 'like', "%$keyword%")
-                ->orWhere('Mail', 'like', "%$keyword%");
-        })
-        ->orWhereHas('ShopsFK', function ($query) use ($keyword) {
-            $query->where('Kod', 'like', "%$keyword%")
-                ->orWhere('Nazwa_Lokalizacji', 'like', "%$keyword%");
-        })
-        ->orWhereHas('InvoicesFK', function ($query) use ($keyword) {
-            $query->where('numer_faktury', 'like', "%$keyword%");
-        })
-        ->orWhere('Kwota', 'like', "%$keyword%")
-        ->orWhere('DataNaprawy', 'like', "%$keyword%")
-        
-        ->orderBy('IDNaprawy', 'asc')
-        ->paginate(10);
+        $query = Repairs::where("Aktywne", "=", true);
+
+        if ($keyword != "") {
+            $query->where(function ($query) use ($keyword) {
+                $query->whereHas('ContractorsFK', function ($query) use ($keyword) {
+                        $query->where('Nazwa', 'like', "%$keyword%")
+                            ->orWhere('Mail', 'like', "%$keyword%");
+                    })
+                    ->orWhereHas('ShopsFK', function ($query) use ($keyword) {
+                        $query->where('Kod', 'like', "%$keyword%")
+                            ->orWhere('Nazwa_Lokalizacji', 'like', "%$keyword%");
+                    })
+                    ->orWhereHas('InvoicesFK', function ($query) use ($keyword) {
+                        $query->where('numer_faktury', 'like', "%$keyword%");
+                    })
+                    ->orWhere('Kwota', 'like', "%$keyword%")
+                    ->orWhere('DataNaprawy', 'like', "%$keyword%");
+            });
+        }
+
+        $models = $query->orderBy('IDNaprawy', 'asc')->paginate(10);
 
         return view('Repairs.index', [
             "models" => $models,
         ]);
-        return view('Repairs.index', ["models" => $models]);
     }
+
 
     public function create() : View
     {

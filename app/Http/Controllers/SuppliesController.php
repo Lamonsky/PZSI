@@ -11,28 +11,35 @@ use App\Models\Shops;
 
 class SuppliesController extends Controller
 {
-    public function index(Request $request){
-        $models = Supplies::where("Aktywne", "=", true)->orderBy("IDToneru","asc")->paginate(1000);
+    public function index(Request $request)
+    {
         $keyword = $request->input('search');
 
-        // Wykonaj zapytanie z filtrowaniem używając Eloquent
-        $models = Supplies::where("Aktywne", "=", true)
-        ->whereHas('ShopsFK', function ($query) use ($keyword) {
-            $query->where('Kod', 'like', "%$keyword%")
-                ->orWhere('Numer_Lokalizacji', 'like', "%$keyword%");
-        })
-        ->orWhereHas('InvoicesFK', function ($query) use ($keyword) {
-            $query->where('numer_faktury', 'like', "%$keyword%");
-        })
-        ->orWhere('Kwota', 'like', "%$keyword%")
-        ->orWhere('Ilosc', 'like', "%$keyword%")
-        ->orWhere('Suma', 'like', "%$keyword%")
-        ->orWhere('Data', 'like', "%$keyword%")
-        
-        ->orderBy('IDToneru', 'asc')
-        ->paginate(10);
-        return view('Supplies.index', ["models" => $models]);
+        $query = Supplies::where("Aktywne", "=", true);
+
+        if ($keyword != "") {
+            $query->where(function ($query) use ($keyword) {
+                $query->whereHas('ShopsFK', function ($query) use ($keyword) {
+                    $query->where('Kod', 'like', "%$keyword%")
+                        ->orWhere('Numer_Lokalizacji', 'like', "%$keyword%");
+                })
+                ->orWhereHas('InvoicesFK', function ($query) use ($keyword) {
+                    $query->where('numer_faktury', 'like', "%$keyword%");
+                })
+                ->orWhere('Kwota', 'like', "%$keyword%")
+                ->orWhere('Ilosc', 'like', "%$keyword%")
+                ->orWhere('Suma', 'like', "%$keyword%")
+                ->orWhere('Data', 'like', "%$keyword%");
+            });
+        }
+
+        $models = $query->orderBy('IDToneru', 'asc')->paginate(10);
+
+        return view('Supplies.index', [
+            "models" => $models,
+        ]);
     }
+
 
     public function create() : View
     {

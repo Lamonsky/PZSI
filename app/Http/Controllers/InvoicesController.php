@@ -9,17 +9,17 @@ use Illuminate\View\View;
 
 class InvoicesController extends Controller
 {
-    public function index(Request $request){
-        $models = Invoices::where("Aktywne", "=", true)->orderBy("id","asc")->paginate(1000);
+    public function index(Request $request)
+    {
         $keyword = $request->input('search');
-
-        // Wykonaj zapytanie z filtrowaniem używając Eloquent
-        $models = Invoices::where("Aktywne", "=", true)
-        ->Where('numer_faktury', 'like', "%$keyword%")
-        ->orderBy('id', 'asc')
-        ->paginate(10);
+        $query = Invoices::where("Aktywne", "=", true);
+        if ($keyword != "") {
+            $query->where('numer_faktury', 'like', "%$keyword%");
+        }
+        $models = $query->orderBy('id', 'asc')->paginate(10);
         return view('Invoices.index', ["models" => $models]);
     }
+
 
     public function create() : View
     {

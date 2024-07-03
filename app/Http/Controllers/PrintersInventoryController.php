@@ -13,29 +13,32 @@ use App\Models\Contractors;
 class PrintersInventoryController extends Controller
 {
     public function index(Request $request){
-        $models = PrintersInventory::where("Aktywne", "=", true)->orderBy("IDLokalizacji","asc")->paginate(1000);
         $keyword = $request->input('search');
 
-        // Wykonaj zapytanie z filtrowaniem używając Eloquent
-        $models = PrintersInventory::where("Aktywne", "=", true)
-        ->whereHas('PrintersModelsFK', function ($query) use ($keyword) {
-            $query->where('Producent', 'like', "%$keyword%")
-                ->orWhere('Model', 'like', "%$keyword%");
-        })
-        ->orWhereHas('ContractorsFK', function ($query) use ($keyword) {
-            $query->where('Nazwa', 'like', "%$keyword%")
-                ->orWhere('Mail', 'like', "%$keyword%");
-        })
-        ->orWhereHas('LocationsFK', function ($query) use ($keyword) {
-            $query->where('Kod', 'like', "%$keyword%")
-                ->orWhere('Nazwa_Lokalizacji', 'like', "%$keyword%");
-        })
-        ->orWhere('NumerSeryjny', 'like', "%$keyword%")
-        ->orWhere('AdresIP', 'like', "%$keyword%")
-        ->orWhere('Lokalizacja', 'like', "%$keyword%")
+        $query = PrintersInventory::where("Aktywne", "=", true);
+
+        if ($keyword != "") {
+            $query->where(function ($q) use ($keyword) {
+                $q->whereHas('PrintersModelsFK', function ($query) use ($keyword) {
+                    $query->where('Producent', 'like', "%$keyword%")
+                        ->orWhere('Model', 'like', "%$keyword%");
+                })
+                ->orWhereHas('ContractorsFK', function ($query) use ($keyword) {
+                    $query->where('Nazwa', 'like', "%$keyword%")
+                        ->orWhere('Mail', 'like', "%$keyword%");
+                })
+                ->orWhereHas('LocationsFK', function ($query) use ($keyword) {
+                    $query->where('Kod', 'like', "%$keyword%")
+                        ->orWhere('Nazwa_Lokalizacji', 'like', "%$keyword%");
+                })
+                ->orWhere('NumerSeryjny', 'like', "%$keyword%")
+                ->orWhere('AdresIP', 'like', "%$keyword%")
+                ->orWhere('Lokalizacja', 'like', "%$keyword%");
+            });
+        }
+
+        $models = $query->orderBy('IDdrukarki', 'asc')->paginate(10);
         
-        ->orderBy('IDdrukarki', 'asc')
-        ->paginate(10);
         return view('PrintersInventory.index', ["models" => $models]);
     }
 

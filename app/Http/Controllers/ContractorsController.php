@@ -9,18 +9,24 @@ use Illuminate\View\View;
 
 class ContractorsController extends Controller
 {
-    public function index(Request $request){
-        $models = Contractors::where("Aktywne", "=", true)->orderBy("IDDostawcy","asc")->paginate(1000);
+    public function index(Request $request)
+    {
         $keyword = $request->input('search');
 
-        // Wykonaj zapytanie z filtrowaniem używając Eloquent
-        $models = Contractors::where("Aktywne", "=", true)
-        ->Where('Nazwa', 'like', "%$keyword%")
-        ->orWhere('Mail', 'like', "%$keyword%")
-        ->orderBy('IDDostawcy', 'asc')
-        ->paginate(10);
+        $query = Contractors::where("Aktywne", "=", true);
+
+        if ($keyword != "") {
+            $query->where(function ($q) use ($keyword) {
+                $q->where('Nazwa', 'like', "%$keyword%")
+                ->orWhere('Mail', 'like', "%$keyword%");
+            });
+        }
+
+        $models = $query->orderBy('IDDostawcy', 'asc')->paginate(10);
+
         return view('Contractors.index', ["models" => $models]);
     }
+
 
     public function create() : View
     {
@@ -53,7 +59,7 @@ class ContractorsController extends Controller
         $model->Aktywne = $request->input("Aktywne") ? false : true;
 
         $model->save();
-
+        
         return redirect("/contractors");
     }
 
