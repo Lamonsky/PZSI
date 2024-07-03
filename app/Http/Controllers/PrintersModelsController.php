@@ -39,7 +39,7 @@ class PrintersModelsController extends Controller
         $model = new PrintersModels();
         $model->Producent = $request->input("Producent");
         $model->Model = $request->input("Model");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
         $model->save();
 
         return redirect("/printers-models");
@@ -56,7 +56,7 @@ class PrintersModelsController extends Controller
         $model = PrintersModels::find($id);
         $model->Producent = $request->input("Producent");
         $model->Model = $request->input("Model");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
 
         $model->save();
 

@@ -43,7 +43,7 @@ class ShopsController extends Controller
         $model->Kod = $request->input("Kod");
         $model->Nazwa_Lokalizacji = $request->input("Nazwa_Lokalizacji");
         $model->IleDrukarek = $request->input("IleDrukarek");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
         $model->save();
 
         return redirect("/shops");
@@ -61,7 +61,7 @@ class ShopsController extends Controller
         $model->Kod = $request->input("Kod");
         $model->Nazwa_Lokalizacji = $request->input("Nazwa_Lokalizacji");
         $model->IleDrukarek = $request->input("IleDrukarek");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
 
         $model->save();
 

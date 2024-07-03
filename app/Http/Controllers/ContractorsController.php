@@ -39,7 +39,7 @@ class ContractorsController extends Controller
         $model = new Contractors();
         $model->Nazwa = $request->input("Nazwa");
         $model->Mail = $request->input("Mail");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
         $model->save();
 
         return redirect("/contractors");
@@ -56,7 +56,7 @@ class ContractorsController extends Controller
         $model = Contractors::find($id);
         $model->Nazwa = $request->input("Nazwa");
         $model->Mail = $request->input("Mail");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
 
         $model->save();
         

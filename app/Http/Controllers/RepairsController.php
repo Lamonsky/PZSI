@@ -74,7 +74,7 @@ class RepairsController extends Controller
         $model->Kwota = $request->input("Kwota");
         $model->DataNaprawy = $request->input("DataNaprawy");
         $model->IDFaktury = $request->input("IDFaktury");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
         $model->save();
 
         return redirect("/repairs")->with('success', 'Dane zostały pomyślnie zapisane');
@@ -110,7 +110,7 @@ class RepairsController extends Controller
         $model->Kwota = $request->input("Kwota");
         $model->DataNaprawy = $request->input("DataNaprawy");
         $model->IDFaktury = $request->input("IDFaktury");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
 
         $model->save();
 

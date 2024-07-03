@@ -30,12 +30,12 @@
                     <div class="card-body">
                         <p class="card-title h7">Producent: {{$model->PrintersModelsFK->Producent}}</p>
                         <p>Model: {{$model->PrintersModelsFK->Model}}</p>
-                        <p>Model: {{$model->NumerSeryjny}}</p>
-                        <p>Model: {{$model->AdresIP}}</p>
+                        <p>Numer seryjny: {{$model->NumerSeryjny}}</p>
+                        <p>Adres IP: {{$model->AdresIP}}</p>
                         <div class="badge bg-secondary">
                             <p>Serwis</p>
-                            <p>{{$model->ContractorsFK->Nazwa}}</p>
-                            <p>{{$model->ContractorsFK->Mail}}</p>
+                            <p>Nazwa:{{$model->ContractorsFK->Nazwa}}</p>
+                            <p>Mail:{{$model->ContractorsFK->Mail}}</p>
                         </div>
                         <div class="badge bg-primary">
                             <p>Lokalizacja</p>

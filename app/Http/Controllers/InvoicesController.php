@@ -32,7 +32,7 @@ class InvoicesController extends Controller
         $model = new Invoices();
         $model->numer_faktury = $request->input("numer_faktury");
         
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
         $model->save();
 
         return redirect("/invoices");
@@ -49,7 +49,7 @@ class InvoicesController extends Controller
         $model = Invoices::find($id);
         $model->numer_faktury = $request->input("numer_faktury");
         
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
 
         $model->save();
 

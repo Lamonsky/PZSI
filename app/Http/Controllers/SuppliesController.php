@@ -71,7 +71,7 @@ class SuppliesController extends Controller
         $model->Suma = $model->Kwota * $model->Ilosc;
         $model->Data = $request->input("Data");
         $model->IDFaktury = $request->input("IDFaktury");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
         $model->save();
 
         return redirect("/supplies")->with('success', 'Dane zostały pomyślnie zapisane');
@@ -107,7 +107,7 @@ class SuppliesController extends Controller
         $model->Suma = $model->Kwota * $model->Ilosc;
         $model->Data = $request->input("Data");
         $model->IDFaktury = $request->input("IDFaktury");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
 
         $model->save();
 

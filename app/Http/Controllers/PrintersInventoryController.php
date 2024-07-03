@@ -72,7 +72,7 @@ class PrintersInventoryController extends Controller
         $model->IDDostawcy = $request->input("IDDostawcy");
         $model->IDModeluDrukarki = $request->input("IDModeluDrukarki");
         $model->IDLokalizacji = $request->input("IDLokalizacji");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
         $model->save();
 
         return redirect("/printers-inventory");
@@ -96,7 +96,7 @@ class PrintersInventoryController extends Controller
         $model->IDDostawcy = $request->input("IDDostawcy");
         $model->IDModeluDrukarki = $request->input("IDModeluDrukarki");
         $model->IDLokalizacji = $request->input("IDLokalizacji");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
         $model->save();
 
         return redirect("/printers-inventory");

@@ -95,7 +95,7 @@ class RentingController extends Controller
         $model->Suma = $model->KwotaJedNetto * $model->Ilosc + $model->KwotaDzierzawy;
         $model->Data = $request->input("Data");
         $model->IDFaktury = $request->input("IDFaktury");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
         $model->save();
 
         return redirect("/renting")->with('success', 'Dane zostały pomyślnie zapisane');
@@ -140,7 +140,7 @@ class RentingController extends Controller
         $model->Suma = $model->KwotaJedNetto * $model->Ilosc + $model->KwotaDzierzawy;
         $model->Data = $request->input("Data");
         $model->IDFaktury = $request->input("IDFaktury");
-        $model->Aktywne = $request->input("Aktywne") ? false : true;
+        $model->Aktywne = $request->input("Aktywne") ? true : false;
 
         $model->save();
 

@@ -95,7 +95,7 @@
                         </label>
                     </div>
                     <div class="form-switch form-check col-auto">
-                        <input class="form-check-input validate" {{ $model->Aktywne ? "checked" : "" }} type="checkbox" name="IsPublic">
+                        <input class="form-check-input validate" {{ $model->Aktywne ? "checked" : "" }} type="checkbox" name="Aktywne">
                         <label class="form-check-label">
                         <i class="material-icons-round align-middle">public</i>    
                             Aktywne 
@@ -104,7 +104,7 @@
                 </div>
             </div>
             <div class="col-sm-12">
-                <button class="btn btn-primary">Dodaj</button>
+                <button class="btn btn-primary">Zapisz</button>
             </div>
         </div>
     </form>
