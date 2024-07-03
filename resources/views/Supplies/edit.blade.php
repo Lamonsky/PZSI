@@ -1,6 +1,7 @@
 @extends("main", ["title" => "Tonery Edycja"])
 
 @section("menu")
+<h2>Tonery</h2>
     <a class="btn btn-primary" href="/supplies">Powrót</a>
 @endsection
 

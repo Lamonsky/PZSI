@@ -1,6 +1,7 @@
 @extends("main", ["title" => "Dzierżawa Dodaj"])
 
 @section("menu")
+<h2>Dzierżawa</h2>
     <a class="btn btn-primary" href="/renting">Powrót</a>
 @endsection
 

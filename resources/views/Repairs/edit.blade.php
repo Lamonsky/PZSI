@@ -1,6 +1,7 @@
 @extends("main", ["title" => "Naprawy Edycja"])
 
 @section("menu")
+<h2>Naprawy</h2>
     <a class="btn btn-primary" href="/repairs">Powrót</a>
 @endsection
 

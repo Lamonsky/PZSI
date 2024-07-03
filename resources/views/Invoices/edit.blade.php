@@ -1,6 +1,7 @@
 @extends("main", ["title" => "Dostawcy Edycja"])
 
 @section("menu")
+<h2>Tonery</h2>
     <a class="btn btn-primary" href="/invoices">Powrót</a>
 @endsection
 

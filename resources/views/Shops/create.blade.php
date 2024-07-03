@@ -1,6 +1,7 @@
 @extends("main", ["title" => "Sklepy Dodaj"])
 
 @section("menu")
+<h2>Sklepy</h2>
     <a class="btn btn-primary" href="/shops">Powrót</a>
 @endsection
 

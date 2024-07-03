@@ -2,6 +2,7 @@
 @extends("main", ["title" => "Drukarki Modele"])
 
 @section("menu")
+<h2>Drukarki Modele</h2>
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <div>

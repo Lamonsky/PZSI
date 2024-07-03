@@ -1,6 +1,8 @@
 @extends("main", ["title" => "Dostawcy Edycja"])
 
 @section("menu")
+<h2>Dostawcy</h2>
+
     <a class="btn btn-primary" href="/contractors">Powrót</a>
 @endsection
 

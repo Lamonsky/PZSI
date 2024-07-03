@@ -1,6 +1,8 @@
 @extends("main", ["title" => "Drukarki Inwentaryzacja Dodaj"])
 
 @section("menu")
+
+<h2>Drukarki Inwentaryzacja</h2>
     <a class="btn btn-primary" href="/printers-inventory">Powrót</a>
 @endsection
 
