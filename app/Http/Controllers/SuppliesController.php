@@ -44,8 +44,8 @@ class SuppliesController extends Controller
     public function create() : View
     {
         $model = new Supplies();
-        $invoices = Invoices::all();
-        $shops = Shops::all();
+        $invoices = Invoices::where('Aktywne', true)->get();
+        $shops = Shops::where('Aktywne', true)->get();
         return view('Supplies.create', [
             "model" => $model,
             "invoices" => $invoices,
@@ -80,8 +80,8 @@ class SuppliesController extends Controller
     public function edit($id) : View
     {
         $model = Supplies::find($id);
-        $shops = Shops::all();
-        $invoices = Invoices::all();
+        $shops = Shops::where('Aktywne', true)->get();
+        $invoices = Invoices::where('Aktywne', true)->get();
         return view('Supplies.edit', [
             "model" => $model,
             "invoices" => $invoices,

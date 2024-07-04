@@ -45,9 +45,9 @@ class PrintersInventoryController extends Controller
     public function create() : View
     {
         $model = new PrintersInventory();
-        $locations = Shops::all();
-        $printersmodels = PrintersModels::all();
-        $contractors = Contractors::all();
+        $locations = Shops::where('Aktywne', true)->get();
+        $printersmodels = PrintersModels::where('Aktywne', true)->get();
+        $contractors = Contractors::where('Aktywne', true)->get();
         return view('PrintersInventory.create', [
             "model" => $model, 
             "locations" => $locations, 
@@ -81,9 +81,9 @@ class PrintersInventoryController extends Controller
     public function edit($id) : View
     {
         $model = PrintersInventory::find($id);
-        $locations = Shops::all();
-        $printersmodels = PrintersModels::all();
-        $contractors = Contractors::all();
+        $locations = Shops::where('Aktywne', true)->get();
+        $printersmodels = PrintersModels::where('Aktywne', true)->get();
+        $contractors = Contractors::where('Aktywne', true)->get();
         return view('PrintersInventory.edit', ["model" => $model, "locations" => $locations, "contractors" => $contractors, "printersmodels" => $printersmodels]);
     }
 

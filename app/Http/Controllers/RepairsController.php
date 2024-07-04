@@ -47,9 +47,9 @@ class RepairsController extends Controller
     public function create() : View
     {
         $model = new Repairs();
-        $contractors = Contractors::all();
-        $invoices = Invoices::all();
-        $shops = Shops::all();
+        $contractors = Contractors::where('Aktywne', true)->get();
+        $invoices = Invoices::where('Aktywne', true)->get();
+        $shops = Shops::where('Aktywne', true)->get();
         return view('Repairs.create', [
             "model" => $model,
             "contractors" => $contractors,
@@ -83,9 +83,9 @@ class RepairsController extends Controller
     public function edit($id) : View
     {
         $model = Repairs::find($id);
-        $contractors = Contractors::all();
-        $shops = Shops::all();
-        $invoices = Invoices::all();
+        $contractors = Contractors::where('Aktywne', true)->get();
+        $shops = Shops::where('Aktywne', true)->get();
+        $invoices = Invoices::where('Aktywne', true)->get();
         return view('Repairs.edit', [
             "model" => $model,
             "contractors" => $contractors,

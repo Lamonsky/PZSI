@@ -59,9 +59,9 @@ class RentingController extends Controller
     public function create() : View
     {
         $model = new Renting();
-        $printersinventory = PrintersInventory::all();
-        $contractors = Contractors::all();
-        $invoices = Invoices::all();
+        $printersinventory = PrintersInventory::where('Aktywne', true)->get();
+        $contractors = Contractors::where('Aktywne', true)->get();
+        $invoices = Invoices::where('Aktywne', true)->get();
         return view('Renting.create', [
             "model" => $model,
             "printersinventory" => $printersinventory,
@@ -104,9 +104,9 @@ class RentingController extends Controller
     public function edit($id) : View
     {
         $model = Renting::find($id);
-        $printersinventory = PrintersInventory::all();
-        $contractors = Contractors::all();
-        $invoices = Invoices::all();
+        $printersinventory = PrintersInventory::where('Aktywne', true)->get();
+        $contractors = Contractors::where('Aktywne', true)->get();
+        $invoices = Invoices::where('Aktywne', true)->get();
         return view('Renting.edit', [
             "model" => $model,
             "printersinventory" => $printersinventory,
