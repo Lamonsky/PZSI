@@ -29,7 +29,7 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="card-title h5">{{ $model->Kod }}</p>
-                        <p>Mail: {!! $model -> Nazwa_Lokalizacji !!}</p>
+                        <p>Lokalizacja: {!! $model -> Nazwa_Lokalizacji !!}</p>
                     </div>
                     <div class="card-footer">
                         <a href="{{ url()->current() }}/edit/{{ $model->IDLokalizacji }}" class="btn btn-primary">Edytuj</a>                        
